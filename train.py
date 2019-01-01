@@ -93,7 +93,8 @@ def main(_):
 
         print('Producing artifacts')
 
-        plot.reconstruction_progress_plot(data_samples, filename=path('reconstruction-progress'))
+        plot.reconstruction_progress_plot(data_samples, filename=path('reconstruction-progress'),
+                                          no_epoches=FLAGS.epoch)
 
         sess.run(data_iterators.test_init_op,
                  feed_dict={data_iterators.x: x_test, data_iterators.batch_size: x_test.shape[0]})

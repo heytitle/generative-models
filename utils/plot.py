@@ -54,7 +54,7 @@ def latent_interpolate(sess, model, data_iterators, title="Latent-Space Interpol
     plt.close(fig)
 
 
-def reconstruction_progress_plot(data, filename=None):
+def reconstruction_progress_plot(data, no_epoches, filename=None):
     if len(data) > 10:
         data[9] = data[-1]
         data = data[:10]
@@ -68,7 +68,7 @@ def reconstruction_progress_plot(data, filename=None):
             if i == 0 and j == 0:
                 plt.title('Data')
             elif i == 0 and j == 5:
-                plt.title('Reconstruction at different epoches')
+                plt.title('Reconstruction at different epoches (%d)' % no_epoches)
     if filename:
         plt.savefig(filename)
 
