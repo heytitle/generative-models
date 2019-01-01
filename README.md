@@ -1,8 +1,29 @@
 # Generative Models
 
-This repository contains the reimplementation of generative models.
+This repository contains the reimplementation of generative models. Results from these models can be found in `./output`.
 
 ### Usage (TODO)
+```
+train.py:
+  --[no]animation: If yes, animation of latent space interpolation will be created
+    (default: 'false')
+  --batch_size: Batch size.
+    (default: '64')
+    (an integer)
+  --dataset: [mnist, fashion_mnist, mnist-fashion-mnist-mixed]
+    (default: 'mnist')
+  --epoch: Number of epoch.
+    (default: '20')
+    (an integer)
+  --latent_dims: Number of latent dimensions.
+    (default: '2')
+    (an integer)
+  --learning_rate: Initial learning rate.
+    (default: '0.01')
+    (a number)
+  --model: Model to train.
+    (default: 'VAE')
+```
 
 ### Autoencoders
 - [Variational Autoencoder (VAE)][vae]
