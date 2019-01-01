@@ -17,7 +17,7 @@ class VAE(object):
             h2 = tf.layers.dense(h1, 256, activation=tf.nn.relu, name='l2', reuse=tf.AUTO_REUSE)
 
             z_mu = tf.layers.dense(h2, latent_dims, activation=None, name='l-mu', reuse=tf.AUTO_REUSE)
-            z_log_var = tf.layers.dense(h2, latent_dims, activation=tf.nn.softplus, name='l-log-var',
+            z_log_var = tf.layers.dense(h2, latent_dims, activation=None, name='l-log-var',
                                         reuse=tf.AUTO_REUSE)
 
         return VAE._sample(z_mu, z_log_var), z_mu, z_log_var
