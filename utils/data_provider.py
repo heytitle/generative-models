@@ -7,7 +7,7 @@ import numpy as np
 DATA_SAMPLES = {
     'mnist': [200, 300, 500, 700, 923, 1235, 9080, 998, 77, 71],
     'fashion_mnist': [2023, 30, 1500, 47, 93, 135, 80, 99, 77, 71],
-    'mnist-fashion-mnist': [2023, 30, 1500, 47, 93, 135, 80, 99, 77, 71],
+    'mnist-fashion-mnist-mixed': [2023, 30, 1500, 47, 93, 10135, 12023, 10030, 11500, 10047],
 }
 
 DataIterators = namedtuple('DataIterators',
