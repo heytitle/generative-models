@@ -1,2 +1,2 @@
-from .vae import VAE
+from .vae import *
 from .vanilla_autoencoder import VanillaAE
