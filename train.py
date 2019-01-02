@@ -12,7 +12,7 @@ from utils import data_provider, plot
 flags = tf.app.flags
 FLAGS = flags.FLAGS
 
-flags.DEFINE_float('learning_rate', 0.01, 'Initial learning rate.')
+flags.DEFINE_float('learning_rate', 0.001, 'Initial learning rate.')
 flags.DEFINE_integer('latent_dims', 2, 'Number of latent dimensions.')
 flags.DEFINE_integer('epoch', 20, 'Number of epoch.')
 flags.DEFINE_integer('batch_size', 64, 'Batch size.')
