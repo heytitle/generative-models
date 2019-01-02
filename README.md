@@ -10,7 +10,7 @@ train.py:
   --batch_size: Batch size.
     (default: '64')
     (an integer)
-  --dataset: [mnist, fashion_mnist, mnist-fashion-mnist-mixed]
+  --dataset: Dataset to train.
     (default: 'mnist')
   --epoch: Number of epoch.
     (default: '20')
@@ -19,10 +19,12 @@ train.py:
     (default: '2')
     (an integer)
   --learning_rate: Initial learning rate.
-    (default: '0.01')
+    (default: '0.001')
     (a number)
   --model: Model to train.
     (default: 'VAE')
+  --model_params: parameters for some models
+    (default: 'key:value|key:value')
 ```
 
 ### Autoencoders
