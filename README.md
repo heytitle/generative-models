@@ -1,8 +1,8 @@
 # Generative Models
 
-This repository contains the reimplementation of generative models. Results from these models can be found in `./output`.
+This repository contains the (unofficial) implementation of generative models. Results from these models can be found in `./output`.
 
-### Usage (TODO)
+### Usage
 ```
 train.py:
   --[no]animation: If yes, animation of latent space interpolation will be created
@@ -26,7 +26,10 @@ train.py:
 ```
 
 ### Autoencoders
-- [Variational Autoencoder][vae]: VAE, and its convolutional version (ConvVAE)
+- [Vanilla Autoencoder (VanillaAE)][vanilla-ae]
+- [Variational Autoencoder (VAE)][vae]:
+    - Its convolutional version (ConvVAE) is also implemented.
+- [BetaVAE][betavae]
 
 ### Implementaion Ideas
 - [[1406.5298] Semi-Supervised Learning with Deep Generative Models](https://arxiv.org/abs/1406.5298)
@@ -40,5 +43,6 @@ train.py:
 - [Tutorial on Variational Autoencoders](https://arxiv.org/abs/1606.05908)
 - [Variational Autoencoder and Extensions - VideoLectures.NET](http://videolectures.net/deeplearning2015_courville_autoencoder_extension/?q=variational%20autoencoder)
 
+[vanilla-ae]: https://pdfs.semanticscholar.org/c50d/ca78e97e335d362d6b991ae0e1448914e9a3.pdf
 [vae]: https://arxiv.org/abs/1312.6114
-
+[betavae]: https://openreview.net/forum?id=Sy2fzU9gl
