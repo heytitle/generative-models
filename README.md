@@ -26,7 +26,7 @@ train.py:
 ```
 
 ### Autoencoders
-- [Variational Autoencoder (VAE)][vae]
+- [Variational Autoencoder][vae]: VAE, and its convolutional version (ConvVAE)
 
 ### Implementaion Ideas
 - [[1406.5298] Semi-Supervised Learning with Deep Generative Models](https://arxiv.org/abs/1406.5298)
