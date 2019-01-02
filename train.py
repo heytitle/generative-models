@@ -18,6 +18,7 @@ flags.DEFINE_integer('epoch', 20, 'Number of epoch.')
 flags.DEFINE_integer('batch_size', 64, 'Batch size.')
 flags.DEFINE_string('model', 'VAE', 'Model to train.')
 flags.DEFINE_string('dataset', 'mnist', 'Dataset to train.')
+flags.DEFINE_string('model_params', 'key:value|key:value', 'parameters for some models')
 flags.DEFINE_boolean('animation', False, 'If yes, animation of latent space interpolation will be created')
 
 def main(_):
@@ -39,7 +40,8 @@ def main(_):
     x_iter = data_iterators.x_iter.get_next()
 
     # prepare model and training
-    model = getattr(autoencoders, FLAGS.model)(x_iter, FLAGS.latent_dims)
+    model_params = dict(map(lambda p: p.split(':'), FLAGS.model_params.split('|')))
+    model = getattr(autoencoders, FLAGS.model)(x_iter, FLAGS.latent_dims, **model_params)
 
     train_op = tf.train.AdamOptimizer(FLAGS.learning_rate).minimize(model.loss)
 
@@ -53,7 +55,7 @@ def main(_):
         sess.run(tf.global_variables_initializer())
 
         with tqdm(total=FLAGS.epoch*total_batches) as pbar:
-            pbar.set_description('Training %s' % FLAGS.model)
+            pbar.set_description('Training %s' % model.name)
 
             for i in range(FLAGS.epoch):
                 sess.run(data_iterators.train_init_op,
@@ -80,7 +82,7 @@ def main(_):
                             (-15, 15),
                             (-15, 15),
                         ],
-                        title='%s Latent Space Interpolation' % FLAGS.model,
+                        title='%s Latent Space Interpolation' % model.name,
                         filename=path('gif/latent-space-step-%s' % str(i).rjust(5, '0'))
                     )
 
@@ -106,12 +108,11 @@ def main(_):
             (np.min(test_z_samples[:, 1]), np.max(test_z_samples[:, 1]))
         ]
 
-        plot.scatter_plot(test_z_samples, y_test, title='%s Latent Space' % FLAGS.model,
+        plot.scatter_plot(test_z_samples, y_test, title='%s Latent Space' % model.name,
                           filename=path('latent-space-scatter-plot'))
 
-
         plot.latent_interpolate(sess, model, data_iterators, boundary=z_boundary,
-                                title='%s Latent Space Interpolation' % FLAGS.model,
+                                title='%s Latent Space Interpolation' % model.name,
                                 filename=path('latent-space-interpolation'))
 
         if FLAGS.animation:
@@ -120,6 +121,8 @@ def main(_):
                             duration=0.1)
 
             shutil.rmtree(path('gif'))
+
+        # todo: save all command line params to file for reproduction purpose
 
 if __name__ == '__main__':
     tf.app.run(main)

@@ -2,7 +2,7 @@ import tensorflow as tf
 
 
 class VAE(object):
-    def __init__(self, x, latent_dims):
+    def __init__(self, x, latent_dims, **kwargs):
         self.x = x
         self.latent_dims = latent_dims
 
@@ -10,6 +10,8 @@ class VAE(object):
         self.logits, self.likelihoods = self.decoder(self.z)
 
         self.loss = VAE._loss(self.x, self.z_mu, self.z_log_var, self.logits)
+
+        self.name = 'VAE'
 
     def encoder(self, x, latent_dims=2):
         with tf.variable_scope('vae-encoder'):
@@ -47,6 +49,35 @@ class VAE(object):
 
         return tf.reduce_mean(recon_loss + kl_divergence)
 
+    def _name(self):
+        return 'VAE'
+
+class BetaVAE(VAE):
+    def __init__(self, x, latent_dims, **kwargs):
+
+        self.beta = float(kwargs['beta'])
+
+        self.x = x
+        self.latent_dims = latent_dims
+
+        self.z, self.z_mu, self.z_log_var = self.encoder(x)
+        self.logits, self.likelihoods = self.decoder(self.z)
+
+        self.loss = BetaVAE._loss(self.x, self.z_mu, self.z_log_var, self.logits, beta=self.beta)
+
+        self.name = 'BetaVAE(beta=%.1f)' % self.beta
+
+    @staticmethod
+    def _loss(x, z_mu, z_log_var, logits, beta):
+        # Reconstruction loss (how good reconstruction is)
+        recon_loss = tf.reduce_sum(tf.nn.sigmoid_cross_entropy_with_logits(logits=logits, labels=x), 1)
+
+        # KL Divergence between latent distribution and prior distribution (normal distribution)
+        kl_divergence = 0.5 * tf.reduce_sum(tf.exp(z_log_var) + tf.square(z_mu) - 1 - z_log_var, axis=1)
+
+        return tf.reduce_mean(recon_loss + beta*kl_divergence)
+
+
 class ConvVAE(VAE):
     def __init__(self, x, latent_dims):
         self.x = x
@@ -56,6 +87,8 @@ class ConvVAE(VAE):
         self.logits, self.likelihoods = self.decoder(self.z)
 
         self.loss = ConvVAE._loss(self.x, self.z_mu, self.z_log_var, self.logits)
+
+        self.name = 'ConvVAE'
 
     def encoder(self, x, latent_dims=2):
         with tf.variable_scope('vae-encoder'):
@@ -84,5 +117,3 @@ class ConvVAE(VAE):
             likelihoods = tf.sigmoid(logits)
 
         return logits, likelihoods
-
-

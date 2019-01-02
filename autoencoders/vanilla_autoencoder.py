@@ -2,7 +2,7 @@ import tensorflow as tf
 
 
 class VanillaAE(object):
-    def __init__(self, x, latent_dims):
+    def __init__(self, x, latent_dims, **kwargs):
         self.x = x
         self.latent_dims = latent_dims
 
@@ -10,6 +10,8 @@ class VanillaAE(object):
         self.logits, self.likelihoods = self.decoder(self.z)
 
         self.loss = VanillaAE._loss(self.x, self.logits, self.likelihoods)
+
+        self.name = 'VanillaAE'
 
     def encoder(self, x, latent_dims=2):
         with tf.variable_scope('vae-encoder'):
@@ -39,3 +41,4 @@ class VanillaAE(object):
         # recon_loss = tf.losses.mean_squared_error(x, likelihoods)
 
         return recon_loss
+
